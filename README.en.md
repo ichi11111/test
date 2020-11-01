@@ -4,9 +4,9 @@
 
 [![industrial_ci](https://github.com/rt-net/raspimouse_ros_examples/workflows/industrial_ci/badge.svg?branch=master)](https://github.com/rt-net/raspimouse_ros_examples/actions?query=workflow%3Aindustrial_ci+branch%3Amaster)
 
-Raspberry Pi MouseのROSサンプルコード集です。
+ROS examples for Raspberry Pi Mouse.
 
-ROS 2のサンプルコード集は[こちら](https://github.com/rt-net/raspimouse_ros2_examples)。
+ROS 2 examples is [here](https://github.com/rt-net/raspimouse_ros2_examples).
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/raspberry_pi_mouse.JPG width=500>
 
@@ -52,8 +52,7 @@ source devel/setup.bash
 
 ## License
 
-このリポジトリはApache 2.0ライセンスの元、公開されています。 
-ライセンスについては[LICENSE](./LICENSE)を参照ください。
+This repository is licensed under the Apache 2.0, see [LICENSE](./LICENSE) for details.
 
 ## How To Use Examples
 
@@ -68,7 +67,7 @@ source devel/setup.bash
 
 ### keyboard_control
 
-[teleop_twist_keyboard](http://wiki.ros.org/teleop_twist_keyboard)を使ってRaspberryPiMouseを動かします。
+This is an example to use [teleop_twist_keyboard](http://wiki.ros.org/teleop_twist_keyboard) package to send velocity command for Raspberry Pi Mouse. 
 
 #### Requirements 
 
@@ -76,7 +75,7 @@ source devel/setup.bash
 
 #### How to use
 
-次のコマンドでノードを起動します。
+Launch nodes with the following command:
 
 ```sh
 roslaunch raspimouse_ros_examples teleop.launch key:=true
@@ -85,7 +84,7 @@ roslaunch raspimouse_ros_examples teleop.launch key:=true
 roslaunch raspimouse_ros_examples teleop.launch key:=true mouse:=false
 ```
 
-ノードが起動したら`/motor_on`サービスをコールします。
+Then, call `/motor_on` service to enable motor control with the following command:
 
 ```sh
 rosservice call /motor_on
@@ -96,7 +95,7 @@ rosservice call /motor_on
 
 ### joystick_control
 
-ジョイスティックコントローラでRaspberryPiMouseを動かすコード例です。
+This is an example to use joystick controller to control a Raspberry Pi Mouse.
 
 #### Requirements 
 
@@ -106,7 +105,7 @@ rosservice call /motor_on
 
 #### How to use
 
-次のコマンドでノードを起動します。
+Launch nodes with the following command:
 
 ```sh
 roslaunch raspimouse_ros_examples teleop.launch joy:=true
@@ -118,14 +117,13 @@ roslaunch raspimouse_ros_examples teleop.launch joy:=true joyconfig:="dualshock3
 roslaunch raspimouse_ros_examples teleop.launch joy:=true mouse:=false
 ```
 
-デフォルトのキー割り当てはこちらです。
+This picture shows the default key configuration.
 
 ![joystick_control_keyconfig](https://rt-net.github.io/images/raspberry-pi-mouse/joystick_control_keyconfig.png)
 
 #### Configure
 
-[./config/joy_f710.yml](./config/joy_f710.yml)、[./config/joy_dualshock3.yml](./config/joy_dualshock3.yml)
-のキー番号を編集することで、キー割り当てを変更できます。
+Key assignments can be edited with key numbers in [./config/joy_f710.yml](./config/joy_f710.yml) or [./config/joy_dualshock3.yml](./config/joy_dualshock3.yml).
 
 ```yaml
 button_shutdown_1       : 8
@@ -149,17 +147,16 @@ button_cmd_enable       : 4
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/object_tracking.JPG width=500 />
 
-色情報をもとにオレンジ色のボールの追跡を行うコード例です。
-USB接続のWebカメラとOpenCVを使ってボール追跡をします。
+This is an example to use RGB camera images and OpenCV library for object tracking.
 
 #### Requirements 
 
-- Webカメラ
+- Web camera
   - [Logicool HD WEBCAM C310N](https://www.logicool.co.jp/ja-jp/product/hd-webcam-c310n)
-- カメラマウント
-  - [Raspberry Pi Mouse オプションキット No.4 \[Webカメラマウント\]](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1299_1395&products_id=3584)
-- ボール（Optional）
-  - [ソフトボール（オレンジ）](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1299_1307&products_id=3701)
+- Camera mount
+  - [Raspberry Pi Mouse Option kit No.4 \[Webcam mount\]](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1299_1395&products_id=3584&language=en)
+- Orange ball（Optional）
+  - [Soft Ball (Orange)](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1299_1307&products_id=3701&language=en)
 - Software
   - python
     - opencv
@@ -168,35 +165,34 @@ USB接続のWebカメラとOpenCVを使ってボール追跡をします。
 
 #### Installation
 
-Raspberry Pi Mouseにカメラマウントを取り付け，WebカメラをRaspberry Piに接続します．
+Install a camera mount and a web camera to Raspberry Pi Mouse, then connect the camera to the Raspberry Pi．
 
-次のコマンドで、カメラ制御用のパッケージ（v4l-utils）をインストールします。
+Next, install the v4l-utils package with the following command:
 
 ```sh
 sudo apt install v4l-utils
 ```
 #### How to use
 
-次のスクリプトを実行して、カメラの自動調節機能（自動露光，オートホワイトバランス等）を切ります。
+Turn off automatic adjustment parameters of a camera (auto focus, auto while balance, etc.) with the following command:
 
 ```sh
 rosrun raspimouse_ros_examples camera.bash
 ```
 
-次のコマンドでノードを起動します。
+Then, launch nodes with the following command:
 
 ```sh
 roslaunch raspimouse_ros_examples object_tracking.launch
 ```
 
-\[Raspberry PiのローカルIPアドレス\]:8080でカメラから取得した画像や処理結果の確認が出来ます．
+Browse \[IP address of Raspbery Pi Mouse\]:8080 to show a camera image and a tracking result.
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/web_video_server.png width=500 />
 
 #### Configure
 
-追跡対象の色を変更するには
-[`./scripts/object_tracking.py`](./scripts/object_tracking.py)を編集します。
+Edit [`./scripts/object_tracking.py`](./scripts/object_tracking.py) to change a color of tracking target.
 
 ```python
     def detect_ball(self):
@@ -206,7 +202,7 @@ roslaunch raspimouse_ros_examples object_tracking.launch
         # min_hsv, max_hsv = self.set_color_blue()
 ```
 
-反応が悪い時にはカメラの露光や関数内のパラメータを調整して下さい．
+If object tracking is unstable, please edit the following lines.
 
 ```python
     def set_color_orange(self):
@@ -229,22 +225,21 @@ roslaunch raspimouse_ros_examples object_tracking.launch
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/mouse_with_line_trace_sensor.JPG width=500 />
 
-ライントレースのコード例です。
+This is an example for line following.
 
 #### Requirements
 
-- ライントレースセンサ
-  - [Raspberry Pi Mouse オプションキット No.3 \[ライントレース\]](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1299_1395&products_id=3591)
-- フィールドとライン (Optional)
+- Line following sensor
+  - [Raspberry Pi Mouse Option kit No.3 \[Line follower\]](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1299_1395&products_id=3591&language=en)
+- Field and lines for following (Optional)
 
 #### Installation
 
-Raspberry Pi Mouseにライントレースセンサを取り付けます。
-
+Install a line following sensor unit to Raspberry Pi Mouse.
 
 #### How to use
 
-次のコマンドでノードを起動します。
+Launch nodes with the following command:
 
 ```sh
 roslaunch raspimouse_ros_examples line_follower.launch
@@ -253,23 +248,23 @@ roslaunch raspimouse_ros_examples line_follower.launch
 roslaunch raspimouse_ros_examples line_follower.launch mouse:=false
 ```
 
-Raspberry Pi Mouseをフィールドに置き、SW2を押してフィールド上のセンサ値をサンプリングします。
+Next, place Raspberry Pi Mouse on a field and press SW2 to sample sensor values on the field.
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/field_calibration.JPG width=500 />
 
-次に、センサとラインが重なるようにRaspberry Pi Mouseを置き、SW1を押してライン上のセンサ値をサンプリングします。
+Then, place Raspberry Pi Mouse to detect a line and press SW1 to sample sensor values on the line.
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/line_calibration.JPG width=500 />
 
-最後に、ライン上にRaspberry Pi Mouseを置き、SW0を押してライントレースを開始します。
+Last, place Raspberry Pi Mouse on the line and press SW0 to start line following.
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/start_trace.JPG width=500 />
 
-もう一度SW0を押すとライントレースを停止します。
+Press SW0 again to stop the following.
 
 #### Configure
 
-走行速度を変更するには[`./scripts/line_follower.py`](./scripts/line_follower.py)を編集します。
+Edit [`./scripts/line_follower.py`](./scripts/line_follower.py) to change a velocity command.
 
 ```python
     def _publish_cmdvel_for_line_following(self):
@@ -292,20 +287,20 @@ Raspberry Pi Mouseをフィールドに置き、SW2を押してフィールド�
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/slam_gmapping.png width=500 />
 
-LiDARを使ってSLAM（自己位置推定と地図作成）を行うサンプルです。
+This is an example to use LiDAR for SLAM (Simultaneous Localization And Mapping).
 
 #### Requirements 
 
 - LiDAR
-  - [URG-04LX-UG01](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1348_1296&products_id=2816)
+  - [URG-04LX-UG01](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1348_1296&products_id=2816&language=en)
   - [RPLIDAR A1](https://www.slamtec.com/en/Lidar/A1)
-  - [LDS-01](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1348_5&products_id=3676)
-- [LiDAR Mount](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1299_1395&products_id=3867)
+  - [LDS-01](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1348_5&products_id=3676&language=en)
+- [LiDAR Mount](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1299_1395&products_id=3867&language=en)
 - Joystick Controller (Optional)
   
 #### Installation
 
-Raspberry Pi MouseにLiDARを取り付けます。
+Install a LiDAR to the Raspberry Pi Mouse.
 
 - URG-04LX-UG01
   - <img src=https://rt-net.github.io/images/raspberry-pi-mouse/mouse_with_urg.JPG width=500 />
@@ -316,7 +311,7 @@ Raspberry Pi MouseにLiDARを取り付けます。
   
 #### How to use
 
-Raspberry Pi Mouse上で次のコマンドでノードを起動します。
+Launch nodes on Raspberry Pi Mouse with the following command:
 
 ```sh
 # URG
@@ -327,17 +322,16 @@ roslaunch raspimouse_ros_examples mouse_with_lidar.launch rplidar:=true port:=/d
 
 # LDS
 roslaunch raspimouse_ros_examples mouse_with_lidar.launch lds:=true port:=/dev/ttyUSB0
-
 ```
 
-Raspberry Pi Mouseを動かすため`teleop.launch`を起動します
+Next, launch `teleop.launch` to control Raspberry Pi Mouse with the following command:
 
 ```sh
 # joystick control
 roslaunch raspimouse_ros_examples teleop.launch mouse:=false joy:=true joyconfig:=dualshock3
 ```
 
-次のコマンドでSLAMパッケージを起動します。（Remote computerでの実行推奨）
+Then, launch SLAM packages (on a remote computer recommend) with the following command:
 
 ```sh
 # URG
@@ -350,9 +344,7 @@ roslaunch raspimouse_ros_examples slam_gmapping.launch rplidar:=true
 roslaunch raspimouse_ros_examples slam_gmapping.launch lds:=true
 ```
 
-Raspberry Pi Mouseを動かして地図を作成します。
-
-次のコマンドで作成した地図を保存します。
+After moving Raspberry Pi Mouse and makeing a map, run a node to save the map with the following command:
 
 ```sh
 mkdir ~/maps
@@ -361,7 +353,7 @@ rosrun map_server map_saver -f ~/maps/mymap
 
 #### Configure
 
-[./launch/slam_gmapping.launch](./launch/slam_gmapping.launch)で[gmapping](http://wiki.ros.org/gmapping)パッケージのパラメータを調整します。
+Edit [./launch/slam_gmapping.launch](./launch/slam_gmapping.launch) to configure parameters of [gmapping](http://wiki.ros.org/gmapping) package.
 
 ```xml
   <node pkg="gmapping" type="slam_gmapping" name="raspimouse_slam_gmapping" output="screen">
@@ -392,44 +384,45 @@ rosrun map_server map_saver -f ~/maps/mymap
 
 <img src=https://www.rt-net.jp/wp-content/uploads/2018/02/img-usb9s_01.png width=500 />
 
-IMUセンサを使用した角度制御のコード例です。
+This is an example to use an IMU sensor for direction control.
 
 #### Requirements
 
-- [USB出力9軸IMUセンサモジュール](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1348_1&products_id=3416&language=ja)
+- [USB output 9 degrees IMU sensor module](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1348_1&products_id=3416&language=en)
 - [LiDAR Mount](https://www.rt-shop.jp/index.php?main_page=product_info&cPath=1299_1395&products_id=3867)
 - RT-USB-9axisIMU ROS Package.
   - https://github.com/rt-net/rt_usb_9axisimu_driver
 
 #### Installation
 
-LiDAR MountにIMUセンサモジュールを取り付けます。
+Install the IMU sensor module to the LiDAR mount.
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/mouse_with_imu_2.JPG width=500 />
 
-Raspberry Pi Mouse にLiDAR Mountを取り付けます。
+Install the LiDAR mount to the Raspberry Pi Mouse.
 
 <img src=https://rt-net.github.io/images/raspberry-pi-mouse/mouse_with_imu_1.JPG width=500 />
 
 #### How to use
 
-次のコマンドでノードを起動します。
+Launch nodes on Raspberry Pi Mouse with the following command:
 
 ```sh
 roslaunch raspimouse_ros_examples direction_control.launch
 ```
 
-SW0 ~ SW2を押して動作モードを切り替えます。
+Then, press SW0 ~ SW2 to change the control mode as following,
 
-- SW0: ジャイロセンサのバイアスをキャリブレーションし、ラズパイマウスの方位角を`0 rad`にリセットします
-- SW1: 方位角を`0 rad`に維持する角度制御を開始します
-  - SW0 ~ SW2を押すか、ラズパイマウス本体を横に傾けると終了します
-- SW2: 方位角を`-π ~ π rad`に変化させる角度制御を開始します
-  - SW0 ~ SW2を押すか、ラズパイマウス本体を横に傾けると終了します
+- SW0: Calibrate the gyroscope bias and reset a heading angle of Raspberry Pi Mouse to 0 rad.
+- SW1: Start a direction control to keep the heading angle to 0 rad.
+  - Press SW0 ~ SW2 or tilt the body to sideways to finish the control.
+- SW2: Start a direction control to change the heading angle to `-π ~ π rad`.
+  - Press SW0 ~ SW2 or tilt the body to sideways to finish the control.
 
 #### Configure
 
-角度制御に使うPID制御器のゲインを変更するには[`./scripts/direction_control.py`](./scripts/direction_control.py)を編集します。
+Edit [`./scripts/direction_control.py`](./scripts/direction_control.py)
+to configure gains of a PID controller for the direction control.
 
 ```python
 class DirectionController(object):
