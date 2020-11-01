@@ -205,6 +205,17 @@ class JoyWrapper(object):
 	    for x in range(x_length):
 	        if self._map.data[x + y*x_length] != 0:
 		    h_map[y][x] = 9999
+	for y in range(y_length):
+	    for x in range(x_length):
+	        if 0<x<x_length-1 and 0<y<y_length-1:
+		    if(h_map[y][x+1]==9999 or h_map[y+1][x+1]==9999 or h_map[y+1][x]==9999 or h_map[y+1][x-1]==9999 or h_map[y][x-1]==9999 or h_map[y-1][x-1]==9999 or h_map[y-1][x]==9999 or h_map[y-1][x-1]==9999):
+		        h_map[y][x] = 9998
+	for y in range(y_length):
+	    for x in range(x_length):
+	        if 0<x<x_length-1 and 0<y<y_length-1:
+		    if(h_map[y][x]==9998 or h_map[y][x+1]==9998 or h_map[y+1][x+1]==9998 or h_map[y+1][x]==9998 or h_map[y+1][x-1]==9998 or h_map[y][x-1]==9998 or h_map[y-1][x-1]==9998 or h_map[y-1][x]==9998 or h_map[y-1][x-1]==9998):
+		        h_map[y][x] = 9999
+
         h_map[goal_grid_y][goal_grid_x] = 0
 	que = [[goal_grid_x,goal_grid_y]]
 	tmp_x, tmp_y = goal_grid_x, goal_grid_y
@@ -246,9 +257,11 @@ class JoyWrapper(object):
 	    goal_grid_y = int((goal_y - (self._map.info.origin.position.y))//self._map.info.resolution)
 	    rospy.loginfo("goal_grid_x:%d,goal_grid_y:%d",goal_grid_x,goal_grid_y)
 	    self._h_map = self.h_map_func(goal_grid_x, goal_grid_y)
-	    rospy.loginfo(self._h_map)
+	    #rospy.loginfo(self._h_map)
 	    #for i in range(int(self._map.info.height)):
 		#rospy.loginfo(self._h_map[i])
+            with open("/mnt/hgfs/仮想マシン共用フォルダ/heatmap.txt",'w') as f:
+                f.write(str(self._h_map))
 
 
 	# 目標地点への自律移動モード(スタートボタンが押された時に発動)
